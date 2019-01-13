@@ -42,13 +42,64 @@ function startGame() {
         ball.x += ball.directionX;
         ball.y += ball.directionY;
 
+        if (pressedKeys.w) {
+            moveLeftPlayer('w');
+        }
+        if (pressedKeys.s) {
+            moveLeftPlayer('s');
+        }
+        if (pressedKeys.ArrowUp) {
+            moveRightPlayer('ArrowUp');
+        }
+        if (pressedKeys.ArrowDown) {
+            moveRightPlayer('ArrowDown');
+        }
+
         requestAnimationFrame(moveBall);
     }
 
+    initializeEventHandlers();
     requestAnimationFrame(moveBall);
 }
 
 function ballReset() {
     ball.x = field.leftBound + field.width / 2;
     ball.y = field.topBound + field.height / 2;
+}
+
+const pressedKeys = {
+    w: false,
+    s: false,
+    ArrowUp: false,
+    ArrowDown: false
+};
+function initializeEventHandlers() {
+    const validKeys = ['w', 's', 'ArrowUp', 'ArrowDown'];
+
+    document.addEventListener('keydown', e => {
+        if (!validKeys.includes(e.key)) return;
+
+        pressedKeys[e.key] = true;
+    });
+
+    document.addEventListener('keyup', e => {
+        if (!validKeys.includes(e.key)) return;
+
+        pressedKeys[e.key] = false;
+    });
+}
+
+function moveLeftPlayer(key) {
+    if (key === 's') {
+        leftPlayer.y++;
+    } else {
+        leftPlayer.y--;
+    }
+}
+function moveRightPlayer(key) {
+    if (key === 'ArrowDown') {
+        rightPlayer.y++;
+    } else {
+        rightPlayer.y--;
+    }
 }

@@ -34,6 +34,15 @@ export class Ball extends Element {
 export class Player extends Element {
     constructor(playerId) {
         super(playerId);
+
+        Object.defineProperty(this, 'y', {
+            get: function() {
+                return Number(this.htmlElement.getAttribute('y'));
+            },
+            set: function(value) {
+                this.htmlElement.setAttribute('y', value);
+            }
+        });
     }
 }
 
