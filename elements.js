@@ -10,7 +10,7 @@ export class Ball extends Element {
 
         Object.defineProperty(this, 'x', {
             get: function() {
-                return this.htmlElement.getAttribute('cx');
+                return Number(this.htmlElement.getAttribute('cx'));
             },
             set: function(value) {
                 this.htmlElement.setAttribute('cx', value);
@@ -18,14 +18,16 @@ export class Ball extends Element {
         });
         Object.defineProperty(this, 'y', {
             get: function() {
-                return this.htmlElement.getAttribute('cy');
+                return Number(this.htmlElement.getAttribute('cy'));
             },
             set: function(value) {
                 this.htmlElement.setAttribute('cy', value);
             }
         });
 
-        this.radius = this.htmlElement.getAttribute('r');
+        this.radius = Number(this.htmlElement.getAttribute('r'));
+        this.directionX = 1;
+        this.directionY = 1;
     }
 }
 

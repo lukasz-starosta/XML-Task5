@@ -26,12 +26,22 @@ function startGame() {
     const field = new Field('pong-field');
 
     function moveBall() {
-        ball.y++;
-        if (ball.y >= field.bottomBound - ball.radius) {
-            cancelAnimationFrame(0);
-        } else {
-            requestAnimationFrame(moveBall);
+        if (
+            ball.y >= field.bottomBound - ball.radius ||
+            ball.y <= field.topBound + ball.radius
+        ) {
+            ball.directionY *= -1;
+        } else if (
+            ball.x >= field.rightBound - ball.radius ||
+            ball.x <= field.leftBound + ball.radius
+        ) {
+            ball.directionX *= -1;
         }
+
+        ball.x += ball.directionX;
+        ball.y += ball.directionY;
+
+        requestAnimationFrame(moveBall);
     }
 
     requestAnimationFrame(moveBall);
