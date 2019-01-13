@@ -50,11 +50,6 @@ text {
     font-size: 4em;
 }
 
-.player {
-    height: 40px;
-    width: 5px;
-}
-
 #left-player,
 .score-text-left {
     fill: purple;

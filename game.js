@@ -68,14 +68,24 @@ export default class Game {
     }
 
     movePlayers() {
-        if (this.pressedKeys.w) {
+        if (this.pressedKeys.w && this.leftPlayer.y > this.field.topBound) {
             this.leftPlayer.y--;
-        } else if (this.pressedKeys.s) {
+        } else if (
+            this.pressedKeys.s &&
+            this.leftPlayer.y + this.leftPlayer.height < this.field.bottomBound
+        ) {
             this.leftPlayer.y++;
         }
-        if (this.pressedKeys.ArrowUp) {
+        if (
+            this.pressedKeys.ArrowUp &&
+            this.rightPlayer.y > this.field.topBound
+        ) {
             this.rightPlayer.y--;
-        } else if (this.pressedKeys.ArrowDown) {
+        } else if (
+            this.pressedKeys.ArrowDown &&
+            this.rightPlayer.y + this.rightPlayer.height <
+                this.field.bottomBound
+        ) {
             this.rightPlayer.y++;
         }
     }

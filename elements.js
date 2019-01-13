@@ -43,6 +43,9 @@ export class Player extends Element {
                 this.htmlElement.setAttribute('y', value);
             }
         });
+
+        this.height = Number(this.htmlElement.getAttribute('height'));
+        this.width = Number(this.htmlElement.getAttribute('width'));
     }
 }
 
