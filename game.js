@@ -56,12 +56,24 @@ export default class Game {
             this.ball.y <= this.field.topBound + this.ball.radius
         ) {
             this.ball.directionY *= -1;
-        } else if (this.ball.x >= this.field.rightBound - this.ball.radius) {
+        } else if (this.ball.x >= this.field.rightBound) {
             this.scoreLeft.addPoint();
             this.ballReset();
-        } else if (this.ball.x <= this.field.leftBound + this.ball.radius) {
+        } else if (
+            this.ball.x === this.field.rightBound - this.rightPlayer.width &&
+            (this.ball.y >= this.rightPlayer.y &&
+                this.ball.y <= this.rightPlayer.y + this.rightPlayer.height)
+        ) {
+            this.ball.directionX *= -1;
+        } else if (this.ball.x <= this.field.leftBound) {
             this.scoreRight.addPoint();
             this.ballReset();
+        } else if (
+            this.ball.x === this.field.leftBound + this.leftPlayer.width &&
+            (this.ball.y >= this.leftPlayer.y &&
+                this.ball.y <= this.leftPlayer.y + this.leftPlayer.height)
+        ) {
+            this.ball.directionX *= -1;
         }
         this.ball.x += this.ball.directionX;
         this.ball.y += this.ball.directionY;
