@@ -1,0 +1,70 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background: #363636;
+}
+
+#pong-welcome-screen,
+#pong-field-screen {
+    transition: opacity 0.5s ease-out;
+}
+
+.transparent {
+    opacity: 0;
+}
+
+text {
+    font-family: Bangers, Arial, Helvetica, sans-serif;
+    fill: rebeccapurple;
+}
+.text-huge {
+    font-size: 3em;
+}
+.text-big {
+    font-size: 2em;
+}
+
+.text-emphasis {
+    fill: violet;
+    font-size: 1.1em;
+}
+
+.play-text {
+    fill: white;
+}
+
+/* Field */
+
+#pong-field-screen {
+    background: #363636;
+}
+
+#pong-field {
+    fill: #363636;
+    stroke-width: 1px;
+    stroke: white;
+    stroke-dasharray: 400 300;
+}
+
+.score-text {
+    font-size: 4em;
+}
+
+.player {
+    height: 40px;
+    width: 5px;
+}
+
+#left-player,
+.score-text-left {
+    fill: purple;
+}
+
+#right-player,
+.score-text-right {
+    fill: violet;
+}
+
+#ball {
+    fill: #44fff6;
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8" />
+        <title>XML Task 5 - Pong 217862 217846</title>
+
+        <link rel="stylesheet" type="text/css" href="styles.css" />
+        <link
+            href="https://fonts.googleapis.com/css?family=Bangers"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <svg
+            id="pong-welcome-screen"
+            xmlns="http://www.w3.org/2000/svg"
+            viewbox="0 0 800 600"
+        >
+            <text class="welcome-text text-huge" x="15%" y="20%">
+                Welcome to the game of
+                <tspan class="text-emphasis">PONG</tspan>
+            </text>
+            <text class="welcome-text text-huge" x="15%" y="30%">
+                Authors:
+                <tspan class="text-emphasis"">217862</tspan>
+                <tspan class="text-emphasis">217846</tspan>
+            </text>
+            <text class="welcome-text text-big" x="15%" y="40%">
+                Press <tspan class="text-emphasis">PLAY</tspan> to start
+            </text>
+            <rect
+            id="play-button"
+                x="35%"
+                y="50%"
+                width="30%"
+                height="10%"
+                fill="purple"
+                stroke="white"
+                rx="3%"
+                ry="3%"
+            />
+            <text class="play-text text-huge" x="45%" y="58%">PLAY</text>
+        </svg>
+        <svg
+            id="pong-field-screen"
+            class="transparent"
+            xmlns="http://www.w3.org/2000/svg"
+            viewbox="0 0 800 600"
+        >
+            <rect id="pong-field" x="200" y="50" height="300" width="400" />
+            <rect id="left-player" class="player" x="200" y="60" />
+            <rect id="right-player" class="player" x="590" y="90" />
+            <circle id="ball" cx="395" cy="195" r="5" />
+
+            <text class="score-text-left" x="40" y="100">
+                Purple ranger score:
+                <tspan id="left-score" class="score-text" x="70" y="160">
+                    0
+                </tspan>
+            </text>
+
+            <text class="score-text-right" x="640" y="100">
+                Pink ranger score:
+                <tspan id="right-score" class="score-text" x="670" y="160">
+                    0
+                </tspan>
+            </text>
+        </svg>
+
+        <script type="text/javascript" src="script.js"></script>
+    </body>
+</html>
