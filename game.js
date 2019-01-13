@@ -23,33 +23,8 @@ export default class Game {
     }
 
     animate() {
-        if (
-            this.ball.y >= this.field.bottomBound - this.ball.radius ||
-            this.ball.y <= this.field.topBound + this.ball.radius
-        ) {
-            this.ball.directionY *= -1;
-        } else if (this.ball.x >= this.field.rightBound - this.ball.radius) {
-            this.scoreLeft.addPoint();
-            this.ballReset();
-        } else if (this.ball.x <= this.field.leftBound + this.ball.radius) {
-            this.scoreRight.addPoint();
-            this.ballReset();
-        }
-        this.ball.x += this.ball.directionX;
-        this.ball.y += this.ball.directionY;
-
-        if (this.pressedKeys.w) {
-            this.moveLeftPlayer('w');
-        }
-        if (this.pressedKeys.s) {
-            this.moveLeftPlayer('s');
-        }
-        if (this.pressedKeys.ArrowUp) {
-            this.moveRightPlayer('ArrowUp');
-        }
-        if (this.pressedKeys.ArrowDown) {
-            this.moveRightPlayer('ArrowDown');
-        }
+        this.movePlayers();
+        this.moveBall();
 
         requestAnimationFrame(this.animate.bind(this));
     }
@@ -75,18 +50,33 @@ export default class Game {
         this.ball.y = this.field.topBound + this.field.height / 2;
     }
 
-    moveLeftPlayer(key) {
-        if (key === 's') {
-            this.leftPlayer.y++;
-        } else {
-            this.leftPlayer.y--;
+    moveBall() {
+        if (
+            this.ball.y >= this.field.bottomBound - this.ball.radius ||
+            this.ball.y <= this.field.topBound + this.ball.radius
+        ) {
+            this.ball.directionY *= -1;
+        } else if (this.ball.x >= this.field.rightBound - this.ball.radius) {
+            this.scoreLeft.addPoint();
+            this.ballReset();
+        } else if (this.ball.x <= this.field.leftBound + this.ball.radius) {
+            this.scoreRight.addPoint();
+            this.ballReset();
         }
+        this.ball.x += this.ball.directionX;
+        this.ball.y += this.ball.directionY;
     }
-    moveRightPlayer(key) {
-        if (key === 'ArrowDown') {
-            this.rightPlayer.y++;
-        } else {
+
+    movePlayers() {
+        if (this.pressedKeys.w) {
+            this.leftPlayer.y--;
+        } else if (this.pressedKeys.s) {
+            this.leftPlayer.y++;
+        }
+        if (this.pressedKeys.ArrowUp) {
             this.rightPlayer.y--;
+        } else if (this.pressedKeys.ArrowDown) {
+            this.rightPlayer.y++;
         }
     }
 }
