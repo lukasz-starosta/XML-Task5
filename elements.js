@@ -40,14 +40,24 @@ export class Player extends Element {
 export class Field extends Element {
     constructor(fieldId) {
         super(fieldId);
+        this.width = Number(this.htmlElement.getAttribute('width'));
+        this.height = Number(this.htmlElement.getAttribute('height'));
 
         this.leftBound = Number(this.htmlElement.getAttribute('x'));
         this.topBound = Number(this.htmlElement.getAttribute('y'));
         this.rightBound =
-            Number(this.htmlElement.getAttribute('width')) +
-            Number(this.htmlElement.getAttribute('x'));
+            this.width + Number(this.htmlElement.getAttribute('x'));
         this.bottomBound =
-            Number(this.htmlElement.getAttribute('height')) +
-            Number(this.htmlElement.getAttribute('y'));
+            this.height + Number(this.htmlElement.getAttribute('y'));
+    }
+}
+
+export class Score extends Element {
+    constructor(scoreId) {
+        super(scoreId);
+    }
+
+    addPoint() {
+        this.htmlElement.innerHTML = Number(this.htmlElement.innerHTML) + 1;
     }
 }
