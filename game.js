@@ -51,7 +51,7 @@ export default class Game {
     }
 
     moveBall() {
-        this.detectColission();
+        this.colission();
         this.ball.x += this.ball.directionX;
         this.ball.y += this.ball.directionY;
     }
@@ -79,7 +79,7 @@ export default class Game {
         }
     }
 
-    detectColission() {
+    colission() {
         if (
             this.ball.y >= this.field.bottomBound - this.ball.radius ||
             this.ball.y <= this.field.topBound + this.ball.radius
@@ -88,9 +88,13 @@ export default class Game {
         } else if (
             this.ball.x + this.ball.radius ===
                 this.field.rightBound - this.rightPlayer.width &&
-            (this.ball.y >= this.rightPlayer.y &&
-                this.ball.y <= this.rightPlayer.y + this.rightPlayer.height)
+            this.isWithinPlayerReach(this.rightPlayer)
         ) {
+            const playerCenter =
+                this.rightPlayer.y + this.rightPlayer.height / 2;
+            let deflectFactor =
+                (this.ball.y - playerCenter) / this.rightPlayer.height;
+            this.ball.directionY += deflectFactor;
             this.ball.directionX *= -1;
         } else if (this.ball.x > this.field.rightBound) {
             this.scoreLeft.addPoint();
@@ -98,13 +102,23 @@ export default class Game {
         } else if (
             this.ball.x - this.ball.radius ===
                 this.field.leftBound + this.leftPlayer.width &&
-            (this.ball.y >= this.leftPlayer.y &&
-                this.ball.y <= this.leftPlayer.y + this.leftPlayer.height)
+            this.isWithinPlayerReach(this.leftPlayer)
         ) {
+            const playerCenter = this.leftPlayer.y + this.leftPlayer.height / 2;
+            let deflectFactor =
+                (this.ball.y - playerCenter) / this.leftPlayer.height;
+            this.ball.directionY += deflectFactor;
             this.ball.directionX *= -1;
         } else if (this.ball.x < this.field.leftBound) {
             this.scoreRight.addPoint();
             this.ballReset();
         }
+    }
+
+    isWithinPlayerReach(player) {
+        return (
+            this.ball.y + this.ball.radius >= player.y &&
+            this.ball.y - this.ball.radius <= player.y + player.height
+        );
     }
 }
