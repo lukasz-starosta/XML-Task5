@@ -23,6 +23,7 @@ export default class Game {
 
     startGame() {
         this.initializeEventHandlers();
+        this.ballReset(false);
         this.handle = requestAnimationFrame(this.animate.bind(this));
     }
 
