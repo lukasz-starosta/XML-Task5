@@ -17,31 +17,37 @@ export default class Game {
         };
 
         this.animationSpeed = 2;
+        this.paused = false;
+        this.handle;
     }
 
     startGame() {
         this.initializeEventHandlers();
-        requestAnimationFrame(this.animate.bind(this));
+        this.handle = requestAnimationFrame(this.animate.bind(this));
     }
 
     animate() {
         this.movePlayers();
         this.moveBall();
 
-        requestAnimationFrame(this.animate.bind(this));
+        if (!this.paused) requestAnimationFrame(this.animate.bind(this));
     }
 
     initializeEventHandlers() {
-        const validKeys = ['w', 's', 'ArrowUp', 'ArrowDown'];
+        const validKeys = ['w', 's', 'ArrowUp', 'ArrowDown', 'p'];
 
         document.addEventListener('keydown', e => {
             if (!validKeys.includes(e.key)) return;
-
-            this.pressedKeys[e.key] = true;
+            if (e.key === 'p') {
+                this.paused = !this.paused;
+                if (!this.paused) {
+                    requestAnimationFrame(this.animate.bind(this));
+                }
+            } else this.pressedKeys[e.key] = true;
         });
 
         document.addEventListener('keyup', e => {
-            if (!validKeys.includes(e.key)) return;
+            if (!validKeys.includes(e.key) || e.key === 'p') return;
 
             this.pressedKeys[e.key] = false;
         });
