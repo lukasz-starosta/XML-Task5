@@ -107,7 +107,7 @@ export default class Game {
                 this.rightPlayer.y + this.rightPlayer.height / 2;
             let deflectFactor =
                 (this.ball.y - playerCenter) / this.rightPlayer.height;
-            this.ball.directionY += deflectFactor;
+            this.ball.directionY += 2 * deflectFactor;
             this.ball.directionX *= -1;
         } else if (this.ball.x > this.field.rightBound) {
             this.scoreLeft.addPoint();
@@ -120,7 +120,7 @@ export default class Game {
             const playerCenter = this.leftPlayer.y + this.leftPlayer.height / 2;
             let deflectFactor =
                 (this.ball.y - playerCenter) / this.leftPlayer.height;
-            this.ball.directionY += deflectFactor;
+            this.ball.directionY += 2 * deflectFactor;
             this.ball.directionX *= -1;
         } else if (this.ball.x < this.field.leftBound) {
             this.scoreRight.addPoint();
