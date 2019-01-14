@@ -15,6 +15,8 @@ export default class Game {
             ArrowUp: false,
             ArrowDown: false
         };
+
+        this.animationSpeed = 2;
     }
 
     startGame() {
@@ -45,48 +47,53 @@ export default class Game {
         });
     }
 
-    ballReset() {
+    ballReset(hasLeftScored) {
         this.ball.x = this.field.leftBound + this.field.width / 2;
         this.ball.y = this.field.topBound + this.field.height / 2;
+        this.ball.directionY = 0;
+        this.ball.directionX = hasLeftScored ? 1 : -1;
     }
 
     moveBall() {
         this.colission();
-        this.ball.x += this.ball.directionX;
-        this.ball.y += this.ball.directionY;
+        this.ball.x += this.ball.directionX * this.animationSpeed;
+        this.ball.y += this.ball.directionY * this.animationSpeed;
     }
 
     movePlayers() {
         if (this.pressedKeys.w && this.leftPlayer.y > this.field.topBound) {
-            this.leftPlayer.y--;
+            this.leftPlayer.y -= 2;
         } else if (
             this.pressedKeys.s &&
             this.leftPlayer.y + this.leftPlayer.height < this.field.bottomBound
         ) {
-            this.leftPlayer.y++;
+            this.leftPlayer.y += 2;
         }
         if (
             this.pressedKeys.ArrowUp &&
             this.rightPlayer.y > this.field.topBound
         ) {
-            this.rightPlayer.y--;
+            this.rightPlayer.y -= 2;
         } else if (
             this.pressedKeys.ArrowDown &&
             this.rightPlayer.y + this.rightPlayer.height <
                 this.field.bottomBound
         ) {
-            this.rightPlayer.y++;
+            this.rightPlayer.y += 2;
         }
     }
 
     colission() {
         if (
-            this.ball.y >= this.field.bottomBound - this.ball.radius ||
-            this.ball.y <= this.field.topBound + this.ball.radius
+            this.ball.y >=
+                this.field.bottomBound -
+                    this.ball.radius / this.animationSpeed ||
+            this.ball.y <=
+                this.field.topBound + this.ball.radius / this.animationSpeed
         ) {
             this.ball.directionY *= -1;
         } else if (
-            this.ball.x + this.ball.radius ===
+            this.ball.x + this.ball.radius / this.animationSpeed ===
                 this.field.rightBound - this.rightPlayer.width &&
             this.isWithinPlayerReach(this.rightPlayer)
         ) {
@@ -98,9 +105,9 @@ export default class Game {
             this.ball.directionX *= -1;
         } else if (this.ball.x > this.field.rightBound) {
             this.scoreLeft.addPoint();
-            this.ballReset();
+            this.ballReset(true);
         } else if (
-            this.ball.x - this.ball.radius ===
+            this.ball.x - this.ball.radius / this.animationSpeed ===
                 this.field.leftBound + this.leftPlayer.width &&
             this.isWithinPlayerReach(this.leftPlayer)
         ) {
@@ -111,7 +118,7 @@ export default class Game {
             this.ball.directionX *= -1;
         } else if (this.ball.x < this.field.leftBound) {
             this.scoreRight.addPoint();
-            this.ballReset();
+            this.ballReset(false);
         }
     }
 
