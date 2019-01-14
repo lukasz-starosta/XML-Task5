@@ -41,12 +41,21 @@
             />
             <text class="play-text text-huge" x="45%" y="58%">PLAY</text>
         </svg> -->
+
         <svg
             id="pong-field-screen"
             class="transparentTOCHANGE"
             xmlns="http://www.w3.org/2000/svg"
             viewbox="0 0 800 600"
         >
+            <defs>
+                <linearGradient id="keygrad" x1="0%" x2="0%" y1="0%" y2="100%">
+                    <stop offset="0%" stop-color="cyan" stop-opacity="1" />
+                    <stop offset="30%" stop-color="white" stop-opacity="1" />
+                    <stop offset="100%" stop-color="violet" stop-opacity="1" />
+                </linearGradient>
+            </defs>
+            <!-- Field -->
             <rect id="pong-field" x="200" y="50" height="300" width="400" />
             <rect
                 id="left-player"
@@ -79,6 +88,59 @@
                     0
                 </tspan>
             </text>
+
+            <!-- Tips -->
+            <rect
+                x="60"
+                y="190"
+                width="50"
+                height="50"
+                fill="url(#keygrad)"
+                rx="4"
+                ry="4"
+            />
+            <text class="text-huge" x="66" y="232">W</text>
+            <rect
+                x="60"
+                y="250"
+                width="50"
+                height="50"
+                fill="url(#keygrad)"
+                rx="4"
+                ry="4"
+            />
+            <text class="text-huge" x="70" y="292">S</text>
+            <rect
+                x="660"
+                y="190"
+                width="50"
+                height="50"
+                fill="url(#keygrad)"
+                rx="4"
+                ry="4"
+            />
+            <text class="text-big" x="670" y="226">Up</text>
+            <rect
+                x="660"
+                y="250"
+                width="50"
+                height="50"
+                fill="url(#keygrad)"
+                rx="4"
+                ry="4"
+            />
+            <text font-size="1.5em" x="660" y="284">DOWN</text>
+            <rect
+                x="350"
+                y="355"
+                width="30"
+                height="30"
+                fill="url(#keygrad)"
+                rx="4"
+                ry="4"
+            />
+            <text font-size="1.5em" x="360" y="378">P</text>
+            <text font-size="1.5em" x="390" y="378">to pause</text>
         </svg>
 
         <script type="module" src="script.js"></script>
