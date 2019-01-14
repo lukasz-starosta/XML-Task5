@@ -42,6 +42,13 @@ export default class Game {
                 this.paused = !this.paused;
                 if (!this.paused) {
                     requestAnimationFrame(this.animate.bind(this));
+                    document
+                        .getElementById('pause-overlay')
+                        .setAttribute('visibility', 'hidden');
+                } else {
+                    document
+                        .getElementById('pause-overlay')
+                        .setAttribute('visibility', 'visible');
                 }
             } else this.pressedKeys[e.key] = true;
         });
