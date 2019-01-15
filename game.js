@@ -1,13 +1,13 @@
-import { Player, Ball, Field, Score } from './elements.js';
+import { Player, Ball, Field, Score } from "./elements.js";
 
 export default class Game {
     constructor() {
-        this.ball = new Ball('ball');
-        this.leftPlayer = new Player('left-player');
-        this.rightPlayer = new Player('right-player');
-        this.field = new Field('pong-field');
-        this.scoreLeft = new Score('left-score');
-        this.scoreRight = new Score('right-score');
+        this.ball = new Ball("ball");
+        this.leftPlayer = new Player("left-player");
+        this.rightPlayer = new Player("right-player");
+        this.field = new Field("pong-field");
+        this.scoreLeft = new Score("left-score");
+        this.scoreRight = new Score("right-score");
 
         this.pressedKeys = {
             w: false,
@@ -35,27 +35,23 @@ export default class Game {
     }
 
     initializeEventHandlers() {
-        const validKeys = ['w', 's', 'ArrowUp', 'ArrowDown', 'p'];
+        const validKeys = ["w", "s", "ArrowUp", "ArrowDown", "p"];
 
-        document.addEventListener('keydown', e => {
+        document.addEventListener("keydown", e => {
             if (!validKeys.includes(e.key)) return;
-            if (e.key === 'p') {
+            if (e.key === "p") {
                 this.paused = !this.paused;
                 if (!this.paused) {
                     requestAnimationFrame(this.animate.bind(this));
-                    document
-                        .getElementById('pause-overlay')
-                        .setAttribute('visibility', 'hidden');
+                    document.getElementById("pause-overlay").setAttribute("visibility", "hidden");
                 } else {
-                    document
-                        .getElementById('pause-overlay')
-                        .setAttribute('visibility', 'visible');
+                    document.getElementById("pause-overlay").setAttribute("visibility", "visible");
                 }
             } else this.pressedKeys[e.key] = true;
         });
 
-        document.addEventListener('keyup', e => {
-            if (!validKeys.includes(e.key) || e.key === 'p') return;
+        document.addEventListener("keyup", e => {
+            if (!validKeys.includes(e.key) || e.key === "p") return;
 
             this.pressedKeys[e.key] = false;
         });
@@ -76,58 +72,43 @@ export default class Game {
 
     movePlayers() {
         if (this.pressedKeys.w && this.leftPlayer.y > this.field.topBound) {
-            this.leftPlayer.y -= 2;
-        } else if (
-            this.pressedKeys.s &&
-            this.leftPlayer.y + this.leftPlayer.height < this.field.bottomBound
-        ) {
-            this.leftPlayer.y += 2;
+            this.leftPlayer.y -= this.animationSpeed;
+        } else if (this.pressedKeys.s && this.leftPlayer.y + this.leftPlayer.height < this.field.bottomBound) {
+            this.leftPlayer.y += this.animationSpeed;
         }
-        if (
-            this.pressedKeys.ArrowUp &&
-            this.rightPlayer.y > this.field.topBound
-        ) {
-            this.rightPlayer.y -= 2;
+        if (this.pressedKeys.ArrowUp && this.rightPlayer.y > this.field.topBound) {
+            this.rightPlayer.y -= this.animationSpeed;
         } else if (
             this.pressedKeys.ArrowDown &&
-            this.rightPlayer.y + this.rightPlayer.height <
-                this.field.bottomBound
+            this.rightPlayer.y + this.rightPlayer.height < this.field.bottomBound
         ) {
-            this.rightPlayer.y += 2;
+            this.rightPlayer.y += this.animationSpeed;
         }
     }
 
     colission() {
         if (
-            this.ball.y >=
-                this.field.bottomBound -
-                    this.ball.radius / this.animationSpeed ||
-            this.ball.y <=
-                this.field.topBound + this.ball.radius / this.animationSpeed
+            this.ball.y >= this.field.bottomBound - this.ball.radius ||
+            this.ball.y <= this.field.topBound + this.ball.radius
         ) {
             this.ball.directionY *= -1;
         } else if (
-            this.ball.x + this.ball.radius / this.animationSpeed ===
-                this.field.rightBound - this.rightPlayer.width &&
+            this.ball.x + this.ball.radius / this.animationSpeed === this.field.rightBound - this.rightPlayer.width &&
             this.isWithinPlayerReach(this.rightPlayer)
         ) {
-            const playerCenter =
-                this.rightPlayer.y + this.rightPlayer.height / 2;
-            let deflectFactor =
-                (this.ball.y - playerCenter) / this.rightPlayer.height;
+            const playerCenter = this.rightPlayer.y + this.rightPlayer.height / 2;
+            let deflectFactor = (this.ball.y - playerCenter) / this.rightPlayer.height;
             this.ball.directionY += 2 * deflectFactor;
             this.ball.directionX *= -1;
         } else if (this.ball.x > this.field.rightBound) {
             this.scoreLeft.addPoint();
             this.ballReset(true);
         } else if (
-            this.ball.x - this.ball.radius / this.animationSpeed ===
-                this.field.leftBound + this.leftPlayer.width &&
+            this.ball.x - this.ball.radius / this.animationSpeed === this.field.leftBound + this.leftPlayer.width &&
             this.isWithinPlayerReach(this.leftPlayer)
         ) {
             const playerCenter = this.leftPlayer.y + this.leftPlayer.height / 2;
-            let deflectFactor =
-                (this.ball.y - playerCenter) / this.leftPlayer.height;
+            let deflectFactor = (this.ball.y - playerCenter) / this.leftPlayer.height;
             this.ball.directionY += 2 * deflectFactor;
             this.ball.directionX *= -1;
         } else if (this.ball.x < this.field.leftBound) {
@@ -137,9 +118,6 @@ export default class Game {
     }
 
     isWithinPlayerReach(player) {
-        return (
-            this.ball.y + this.ball.radius >= player.y &&
-            this.ball.y - this.ball.radius <= player.y + player.height
-        );
+        return this.ball.y + this.ball.radius >= player.y && this.ball.y - this.ball.radius <= player.y + player.height;
     }
 }
