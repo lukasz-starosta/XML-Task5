@@ -102,6 +102,8 @@ export default class Game {
             this.ball.directionX *= -1;
         } else if (this.ball.x > this.field.rightBound) {
             this.scoreLeft.addPoint();
+            this.leftPlayer.height -= this.leftPlayer.height > 2 ? 2 : 0;
+            this.rightPlayer.height += 2;
             this.ballReset(true);
         } else if (
             this.ball.x - this.ball.radius / this.animationSpeed === this.field.leftBound + this.leftPlayer.width &&
@@ -113,6 +115,8 @@ export default class Game {
             this.ball.directionX *= -1;
         } else if (this.ball.x < this.field.leftBound) {
             this.scoreRight.addPoint();
+            this.leftPlayer.height += 2;
+            this.rightPlayer.height -= this.rightPlayer.height > 2 ? 2 : 0;
             this.ballReset(false);
         }
     }
